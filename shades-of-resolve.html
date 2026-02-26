@@ -25,6 +25,11 @@
     overflow-x: hidden; 
   }
 
+  /* Scrollbar Styling for Reader */
+  .overlay-content::-webkit-scrollbar { width: 4px; }
+  .overlay-content::-webkit-scrollbar-track { background: var(--cream); }
+  .overlay-content::-webkit-scrollbar-thumb { background: var(--rule); }
+
   .back-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Cinzel', serif; font-size: 0.65em; letter-spacing: 2px; color: var(--muted); text-decoration: none; padding: 20px 32px; text-transform: uppercase; }
   .back-link:hover { color: var(--gold); }
 
@@ -43,18 +48,28 @@
   .chapters-section { max-width: 760px; margin: 0 auto; padding: 72px 32px 80px; }
   .section-label { font-family: 'Cinzel', serif; font-size: 0.65em; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); display: block; text-align: center; margin-bottom: 10px; }
   
-  .chapter-card { display: flex; align-items: center; border-top: 1px solid var(--rule); cursor: pointer; padding: 28px 0; gap: 24px; transition: 0.3s; }
+  .chapter-card { display: flex; align-items: center; border-top: 1px solid var(--rule); cursor: pointer; padding: 28px 0; gap: 24px; transition: 0.3s; position: relative; }
   .chapter-card:hover { background: rgba(255,255,255,0.03); }
-  .ch-numeral { font-family: 'Cormorant Garamond', serif; font-size: 2.8em; color: var(--rule); width: 60px; }
+  .chapter-card.completed .ch-numeral { color: var(--gold); }
+  .chapter-card.completed::after { content: '✓'; position: absolute; left: -20px; color: var(--gold); font-family: 'Cinzel'; font-size: 0.8em; }
+
+  .ch-numeral { font-family: 'Cormorant Garamond', serif; font-size: 2.8em; color: var(--rule); width: 60px; transition: 0.3s; }
   .ch-content { flex: 1; }
   .ch-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5em; color: #fff; margin-bottom: 4px; }
   .ch-preview { font-family: 'EB Garamond', serif; font-size: 0.95em; color: var(--muted); font-style: italic; }
+  .ch-status { font-family: 'Cinzel'; font-size: 0.55em; letter-spacing: 1px; color: var(--gold); display: none; margin-top: 4px; }
+  .chapter-card.completed .ch-status { display: block; }
+
   .ch-thumb { width: 70px; height: 70px; border-radius: 4px; overflow: hidden; border: 1px solid var(--rule); background: #222; }
   .ch-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
   /* OVERLAY STYLES */
   .overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); color: white; padding-top: 40px; }
   .overlay.open { display: flex; }
+  
+  .progress-container { position: fixed; top: 40px; left: 50%; transform: translateX(-50%); width: 700px; max-width: 100%; height: 3px; background: var(--rule); z-index: 210; border-radius: 3px; overflow: hidden; }
+  .progress-bar { height: 100%; background: var(--gold); width: 0%; transition: width 0.3s ease; }
+
   .overlay-content { max-width: 700px; margin: 0 auto; background: var(--parchment); height: 90vh; border-radius: 20px 20px 0 0; padding: 40px; overflow-y: auto; border: 1px solid var(--rule); position: relative; }
   .overlay-header { margin-bottom: 30px; border-bottom: 1px solid var(--rule); padding-bottom: 20px; }
   .overlay-close { color: var(--gold); cursor: pointer; float: right; font-family: 'Cinzel'; font-size: 0.8em; text-transform: uppercase; }
@@ -64,7 +79,7 @@
   .overlay-body p { font-size: 1.15em; line-height: 1.8; margin-bottom: 24px; color: var(--ink); }
   .overlay-body p:first-child::first-letter { font-size: 3.5em; float: left; margin-right: 12px; color: var(--gold); line-height: 0.8; margin-top: 8px; }
 
-  .overlay-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--rule); display: flex; justify-content: center; }
+  .overlay-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--rule); display: flex; justify-content: center; padding-bottom: 40px; }
   .next-ch-btn { font-family: 'Cinzel', serif; background: var(--gold); color: white; border: none; padding: 12px 24px; cursor: pointer; letter-spacing: 2px; transition: 0.3s; border-radius: 2px; }
   .next-ch-btn:hover { background: var(--gold-light); }
 </style>
@@ -90,6 +105,7 @@
 </div>
 
 <div class="overlay" id="overlay">
+  <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
   <div class="overlay-content" id="overlayScroll">
     <div class="overlay-header">
       <span class="overlay-close" onclick="closeChapter()">Close ✕</span>
@@ -103,6 +119,7 @@
 
 <script>
 const ROMAN = ['I','II','III','IV','V','VI','VII'];
+let readChapters = new Set();
 
 const chapters = [
   {
@@ -220,11 +237,12 @@ function init() {
   const list = document.getElementById('chapterList');
   let html = "";
   for(let i=0; i<chapters.length; i++) {
-    html += `<div class="chapter-card" onclick="openChapter(${i})">
+    html += `<div class="chapter-card" id="card-${i}" onclick="openChapter(${i})">
               <div class="ch-numeral">${ROMAN[i]}</div>
               <div class="ch-content">
                 <div class="ch-title">${chapters[i].title}</div>
                 <div class="ch-preview">${chapters[i].preview}</div>
+                <div class="ch-status">Completed</div>
               </div>
               <div class="ch-thumb"><img src="${chapters[i].img}" alt="Chapter ${i+1}"></div>
             </div>`;
@@ -232,21 +250,43 @@ function init() {
   list.innerHTML = html;
 }
 
+function updateProgress(idx) {
+  const percentage = ((idx + 1) / chapters.length) * 100;
+  document.getElementById('progressBar').style.width = percentage + '%';
+}
+
 function openChapter(idx) {
   document.getElementById('overlayTitle').innerText = chapters[idx].title;
   document.getElementById('overlayImageContainer').innerHTML = `<img src="${chapters[idx].img}" class="overlay-illustration" alt="${chapters[idx].title}">`;
   document.getElementById('overlayBody').innerHTML = chapters[idx].content;
   
+  updateProgress(idx);
+
   const footer = document.getElementById('overlayFooter');
   if(idx < chapters.length - 1) {
-    footer.innerHTML = `<button class="next-ch-btn" onclick="openChapter(${idx + 1})">Next Chapter: ${chapters[idx+1].title} →</button>`;
+    footer.innerHTML = `<button class="next-ch-btn" onclick="markAndNext(${idx})">Next Chapter: ${chapters[idx+1].title} →</button>`;
   } else {
-    footer.innerHTML = `<span style="font-family:Cinzel; color:var(--gold)">The End</span>`;
+    footer.innerHTML = `<button class="next-ch-btn" onclick="finishStory(${idx})">✦ Finish Story</button>`;
   }
 
   document.getElementById('overlay').style.display = 'flex';
   document.body.style.overflow = 'hidden';
   document.getElementById('overlayScroll').scrollTop = 0;
+}
+
+function markAndNext(idx) {
+  markAsRead(idx);
+  openChapter(idx + 1);
+}
+
+function finishStory(idx) {
+  markAsRead(idx);
+  closeChapter();
+}
+
+function markAsRead(idx) {
+  readChapters.add(idx);
+  document.getElementById(`card-${idx}`).classList.add('completed');
 }
 
 function closeChapter() {
