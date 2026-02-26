@@ -11,17 +11,15 @@
     --deep-page: #16161d;
     --parchment: #d9d0be; 
     --gold: #b8860b; 
-    --gold-light: #d4a843; 
     --muted: #6a6a75; 
     --rule: #2a2a35; 
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   
-  /* FORCE DARK THEME */
   body { 
     font-family: 'EB Garamond', Georgia, serif; 
-    background-color: var(--ink) !important; 
-    color: var(--parchment) !important; 
+    background-color: var(--ink); 
+    color: var(--parchment); 
     min-height: 100vh; 
     overflow-x: hidden; 
   }
@@ -38,8 +36,8 @@
   .title-rule hr { flex: 1; border: none; border-top: 1px solid var(--rule); }
   .title-rule span { color: var(--gold); font-size: 1em; }
 
-  .hook-section { background: #000; padding: 56px 32px; text-align: center; position: relative; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-  .hook-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.15em, 3vw, 1.5em); font-style: italic; color: #fff; line-height: 1.9; position: relative; z-index: 2; }
+  .hook-section { background: #000; padding: 56px 32px; text-align: center; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .hook-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.15em, 3vw, 1.5em); font-style: italic; color: #fff; line-height: 1.9; }
 
   .chapters-section { max-width: 760px; margin: 0 auto; padding: 72px 32px 80px; }
   .section-label { font-family: 'Cinzel', serif; font-size: 0.65em; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); display: block; text-align: center; margin-bottom: 10px; }
@@ -50,16 +48,17 @@
   .ch-content { flex: 1; }
   .ch-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5em; color: #fff; margin-bottom: 4px; }
   .ch-preview { font-family: 'EB Garamond', serif; font-size: 0.95em; color: var(--muted); font-style: italic; }
-  .ch-thumb { width: 70px; height: 70px; border-radius: 4px; overflow: hidden; border: 1px solid var(--rule); }
+  .ch-thumb { width: 70px; height: 70px; border-radius: 4px; overflow: hidden; border: 1px solid var(--rule); background: #222; }
   .ch-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
   /* OVERLAY STYLES */
   .overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); color: white; padding-top: 40px; }
   .overlay.open { display: block; }
   .overlay-content { max-width: 700px; margin: 0 auto; background: var(--deep-page); height: 90vh; border-radius: 20px 20px 0 0; padding: 40px; overflow-y: auto; border: 1px solid var(--rule); }
-  .overlay-header { margin-bottom: 30px; border-bottom: 1px solid var(--rule); padding-bottom: 20px; }
-  .overlay-close { color: var(--gold); cursor: pointer; float: right; font-family: 'Cinzel'; }
-  .overlay-body p { font-size: 1.2em; line-height: 1.8; margin-bottom: 20px; color: var(--parchment); }
+  .overlay-header { margin-bottom: 30px; border-bottom: 1px solid var(--rule); padding-bottom: 20px; position: relative; }
+  .overlay-close { color: var(--gold); cursor: pointer; float: right; font-family: 'Cinzel'; font-size: 0.8em; }
+  .overlay-body p { font-size: 1.2em; line-height: 1.8; margin-bottom: 24px; color: var(--parchment); }
+  .overlay-body p:first-child::first-letter { font-size: 3.5em; float: left; margin-right: 10px; color: var(--gold); line-height: 1; }
 </style>
 </head>
 <body>
@@ -69,7 +68,7 @@
 <div class="hero">
   <span class="ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
   <h1 class="story-title">Shades of Resolve</h1>
-  <p class="story-subtitle">A Novel in Seven Chapters</p>
+  <h2 class="story-subtitle">A Novel in Seven Chapters</h2>
   <div class="title-rule"><hr><span>✦</span><hr></div>
 </div>
 
@@ -86,7 +85,7 @@
   <div class="overlay-content">
     <div class="overlay-header">
       <span class="overlay-close" onclick="closeChapter()">CLOSE ✕</span>
-      <h2 id="overlayTitle" style="font-family: 'Cormorant Garamond'; font-size: 2.5em;"></h2>
+      <h2 id="overlayTitle" style="font-family: 'Cormorant Garamond'; font-size: 2.5em; font-weight: 300;"></h2>
     </div>
     <div id="overlayBody" class="overlay-body"></div>
   </div>
@@ -95,13 +94,48 @@
 <script>
 const ROMAN = ['I','II','III','IV','V','VI','VII'];
 const chapters = [
-  { title: "The Mirror and the Mask", preview: "A man admired by all confronts a deep question.", img: "images/shades_ch1.jpg", text: "In the quiet corners of his mind, Daniel Sharma often wondered if the face he showed the world was a mirror reflecting their expectations or a mask hiding his own..." },
-  { title: "The Weight of Expectations", preview: "External validation begins to fracture Daniel's peace.", img: "images/shades_ch2.jpg", text: "The accolades were loud, but the silence within was louder. Every 'yes' he uttered to please another felt like a 'no' to himself..." },
-  { title: "A Crack in the Façade", preview: "A minor disagreement becomes a catalyst for change.", img: "images/shades_ch3.jpg", text: "It started with something trivial—a choice of wallpaper, a seating arrangement. But it was the first time Daniel felt his own suppressed will..." },
-  { title: "The Quiet Conflict", preview: "The battle between principles and harmony.", img: "images/shades_ch4.jpg", text: "Harmony had always been his sanctuary, but now it felt like a prison. True peace cannot be bought at the price of integrity..." },
-  { title: "The Turning Point", preview: "A moment of crisis forces a definitive stand.", img: "images/shades_ch5.jpg", text: "The situation demanded a choice. There was no middle ground. Daniel stepped into the light, prepared for the consequences..." },
-  { title: "Living with Integrity", preview: "Embracing honesty brings a newfound freedom.", img: "images/shades_ch6.jpg", text: "The world looked different now. Some friends drifted away, and the comfort of being 'liked' was gone. In its place was something sturdier..." },
-  { title: "The Unmasked Soul", preview: "Peace found not by pleasing others, but by knowing self.", img: "images/shades_ch7.jpg", text: "He stood before the mirror once more. This time, there was no mask. He was finally known, mostly to himself." }
+  { 
+    title: "The Mirror and the Mask", 
+    preview: "A man admired by all confronts a deep question.", 
+    img: "images/shades_ch1.png", 
+    text: "In the quiet corners of his mind, Daniel Sharma often wondered if the face he showed the world was a mirror reflecting their expectations or a mask hiding his own truth. For years, he had been the man of constant 'yes,' the reliable anchor in everyone else's storm. But as he stood before the mirror tonight, the reflection felt like a stranger—a perfectly curated collection of virtues that lacked a soul." 
+  },
+  { 
+    title: "The Weight of Expectations", 
+    preview: "External validation begins to fracture Daniel's peace.", 
+    img: "images/shades_ch2.png", 
+    text: "The accolades were loud, but the silence within was louder. Every 'yes' he uttered to please another felt like a 'no' to himself. He began to feel the physical weight of his reputation. People didn't just like Daniel; they relied on his compliance. It was a heavy crown to wear, and for the first time, he felt the urge to set it down, even if it meant letting the world see him stumble." 
+  },
+  { 
+    title: "A Crack in the Façade", 
+    preview: "A minor disagreement becomes a catalyst for change.", 
+    img: "images/shades_ch3.png", 
+    text: "It started with something trivial—a choice of wallpaper for the office renovation, a seating arrangement at a gala. But it was the first time Daniel felt his own suppressed will push back. When he finally spoke up, the room went silent. It wasn't the disagreement that shocked them; it was the fact that Daniel Sharma had an opinion that didn't aim to please." 
+  },
+  { 
+    title: "The Quiet Conflict", 
+    preview: "The battle between principles and harmony.", 
+    img: "images/shades_ch4.png", 
+    text: "Harmony had always been his sanctuary, but now it felt like a prison. Daniel realized that true peace cannot be bought at the price of integrity. He spent nights pacing the hardwood floors of his study, weighing the comfort of being liked against the necessity of being honest. The conflict was no longer with the world; it was a war within his own heart." 
+  },
+  { 
+    title: "The Turning Point", 
+    preview: "A moment of crisis forces a definitive stand.", 
+    img: "images/shades_ch5.png", 
+    text: "The situation demanded a choice. There was no middle ground, no polite compromise that would save everyone's feelings. Daniel stepped into the light, prepared for the consequences of his conviction. He spoke his truth clearly, without the usual cushioning of apologies. The bridge didn't just burn; it illuminated the path he finally needed to take." 
+  },
+  { 
+    title: "Living with Integrity", 
+    preview: "Embracing honesty brings a newfound freedom.", 
+    img: "images/shades_ch6.png", 
+    text: "The world looked different now. Some friends drifted away, and the comfort of being 'liked' was gone. In its place was something sturdier: self-respect. Daniel found that saying 'no' was not an act of aggression, but an act of definition. He was no longer a shadow shifting to fit the light of others; he was the light itself." 
+  },
+  { 
+    title: "The Unmasked Soul", 
+    preview: "Peace found not by pleasing others, but by knowing self.", 
+    img: "images/shades_ch7.png", 
+    text: "He stood before the mirror once more. This time, there was no mask. He saw the lines of age and the scars of his recent battles, and he found them beautiful. He was finally known, mostly to himself. The resolve that had once been a burden was now his greatest strength, a quiet power that required no audience to exist." 
+  }
 ];
 
 function init() {
@@ -114,7 +148,7 @@ function init() {
               '<div class="ch-title">' + chapters[i].title + '</div>' +
               '<div class="ch-preview">' + chapters[i].preview + '</div>' +
             '</div>' +
-            '<div class="ch-thumb"><img src="' + chapters[i].img + '"></div>' +
+            '<div class="ch-thumb"><img src="' + chapters[i].img + '" alt="' + chapters[i].title + '"></div>' +
             '</div>';
   }
   list.innerHTML = html;
