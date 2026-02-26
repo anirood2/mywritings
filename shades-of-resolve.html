@@ -6,63 +6,106 @@
 <title>Shades of Resolve</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
-  :root { 
-    --ink: #0d0d14; 
-    --deep-page: #16161d;
-    --parchment: #d9d0be; 
-    --gold: #b8860b; 
-    --muted: #6a6a75; 
-    --rule: #2a2a35; 
+  :root {
+    --ink: #1a1610;
+    --parchment: #f5f0e8;
+    --cream: #faf7f2;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --muted: #8a7f6e;
+    --rule: #d9d0be;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  body { 
-    font-family: 'EB Garamond', Georgia, serif; 
-    background-color: var(--ink); 
-    color: var(--parchment); 
-    min-height: 100vh; 
-    overflow-x: hidden; 
-  }
+  body { font-family: 'EB Garamond', Georgia, serif; background: var(--cream); color: var(--ink); min-height: 100vh; overflow-x: hidden; }
 
   .back-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Cinzel', serif; font-size: 0.65em; letter-spacing: 2px; color: var(--muted); text-decoration: none; padding: 20px 32px; text-transform: uppercase; }
   .back-link:hover { color: var(--gold); }
 
   .hero { max-width: 760px; margin: 0 auto; padding: 20px 32px 0; text-align: center; }
-  .ornament { font-size: 1.4em; color: var(--gold); letter-spacing: 12px; display: block; margin-bottom: 28px; }
-  .story-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3em, 8vw, 5.5em); font-weight: 300; color: #ffffff; line-height: 1.05; margin-bottom: 10px; }
-  .story-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.1em; font-style: italic; color: var(--muted); letter-spacing: 1px; margin-bottom: 30px; }
-  
-  .title-rule { display: flex; align-items: center; gap: 16px; margin: 0 auto 30px; max-width: 320px; }
+  .ornament { font-size: 1.4em; color: var(--gold); letter-spacing: 12px; display: block; margin-bottom: 28px; opacity: 0; animation: fadeUp 1s ease 0.2s forwards; }
+  .story-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(3em, 8vw, 5.5em); font-weight: 300; color: var(--ink); line-height: 1.05; margin-bottom: 10px; opacity: 0; animation: fadeUp 1s ease 0.4s forwards; }
+  .story-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.1em; font-style: italic; color: var(--muted); letter-spacing: 1px; margin-bottom: 30px; opacity: 0; animation: fadeUp 1s ease 0.5s forwards; }
+  .title-rule { display: flex; align-items: center; gap: 16px; margin: 0 auto 30px; max-width: 320px; opacity: 0; animation: fadeUp 1s ease 0.6s forwards; }
   .title-rule hr { flex: 1; border: none; border-top: 1px solid var(--rule); }
   .title-rule span { color: var(--gold); font-size: 1em; }
+  .genre-tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 48px; opacity: 0; animation: fadeUp 1s ease 0.7s forwards; }
+  .genre-tag { font-family: 'Cinzel', serif; font-size: 0.6em; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); border: 1px solid var(--rule); padding: 5px 14px; border-radius: 2px; }
 
-  .hook-section { background: #000; padding: 56px 32px; text-align: center; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-  .hook-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.15em, 3vw, 1.5em); font-style: italic; color: #fff; line-height: 1.9; }
+  .hook-section { background: var(--ink); padding: 56px 32px; text-align: center; position: relative; overflow: hidden; }
+  .hook-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, #2a2218 0%, var(--ink) 70%); }
+  .hook-inner { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; }
+  .hook-ornament { color: var(--gold); font-size: 1.8em; display: block; margin-bottom: 24px; letter-spacing: 8px; }
+  .hook-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.15em, 3vw, 1.5em); font-weight: 300; font-style: italic; color: var(--parchment); line-height: 1.9; }
+  .hook-text strong { font-style: normal; font-weight: 600; color: var(--gold-light); }
 
   .chapters-section { max-width: 760px; margin: 0 auto; padding: 72px 32px 80px; }
-  .section-label { font-family: 'Cinzel', serif; font-size: 0.65em; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); display: block; text-align: center; margin-bottom: 10px; }
-  
-  .chapter-card { display: flex; align-items: center; border-top: 1px solid var(--rule); cursor: pointer; padding: 28px 0; gap: 24px; transition: 0.3s; }
-  .chapter-card:hover { background: rgba(255,255,255,0.03); }
-  .ch-numeral { font-family: 'Cormorant Garamond', serif; font-size: 2.8em; color: var(--rule); width: 60px; }
-  .ch-content { flex: 1; }
-  .ch-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5em; color: #fff; margin-bottom: 4px; }
-  .ch-preview { font-family: 'EB Garamond', serif; font-size: 0.95em; color: var(--muted); font-style: italic; }
-  .ch-thumb { width: 70px; height: 70px; border-radius: 4px; overflow: hidden; border: 1px solid var(--rule); background: #222; }
-  .ch-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .section-header { text-align: center; margin-bottom: 52px; }
+  .section-label { font-family: 'Cinzel', serif; font-size: 0.65em; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 10px; }
+  .section-title-text { font-family: 'Cormorant Garamond', serif; font-size: 2em; font-weight: 300; color: var(--ink); }
 
-  /* OVERLAY STYLES */
-  .overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); color: white; padding-top: 40px; }
-  .overlay.open { display: block; }
-  .overlay-content { max-width: 700px; margin: 0 auto; background: var(--deep-page); height: 90vh; border-radius: 20px 20px 0 0; padding: 40px; overflow-y: auto; border: 1px solid var(--rule); }
-  .overlay-header { margin-bottom: 30px; border-bottom: 1px solid var(--rule); padding-bottom: 20px; position: relative; }
-  .overlay-close { color: var(--gold); cursor: pointer; float: right; font-family: 'Cinzel'; font-size: 0.8em; }
-  
-  /* NEW: Chapter Image Styling in Overlay */
-  .chapter-full-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 32px; border: 1px solid var(--rule); display: block; }
-  
-  .overlay-body p { font-size: 1.15em; line-height: 1.8; margin-bottom: 24px; color: var(--parchment); }
-  .overlay-body p:first-child::first-letter { font-size: 3.5em; float: left; margin-right: 12px; color: var(--gold); line-height: 0.8; margin-top: 8px; }
+  .chapter-list { display: flex; flex-direction: column; }
+  .chapter-card { display: flex; align-items: stretch; border-top: 1px solid var(--rule); cursor: pointer; transition: background 0.2s; -webkit-tap-highlight-color: transparent; background: transparent; padding: 28px 0; gap: 24px; }
+  .chapter-card:last-child { border-bottom: 1px solid var(--rule); }
+  .chapter-card:hover { background: rgba(184,134,11,0.04); }
+  .chapter-card:hover .ch-arrow { color: var(--gold); transform: translateX(4px); }
+  .chapter-card:hover .ch-num { color: var(--gold); }
+
+  .ch-num-col { width: 72px; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; padding-top: 4px; }
+  .ch-num { font-family: 'Cinzel', serif; font-size: 0.6em; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); transition: color 0.2s; display: block; margin-bottom: 4px; }
+  .ch-numeral { font-family: 'Cormorant Garamond', serif; font-size: 2.8em; font-weight: 300; color: var(--rule); line-height: 1; }
+
+  .ch-content { flex: 1; }
+  .ch-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5em; font-weight: 400; color: var(--ink); margin-bottom: 8px; line-height: 1.3; }
+  .ch-preview { font-family: 'EB Garamond', serif; font-size: 0.92em; color: var(--muted); line-height: 1.7; font-style: italic; }
+
+  .ch-thumb { width: 76px; height: 76px; flex-shrink: 0; border-radius: 3px; overflow: hidden; border: 1px solid var(--rule); background: #ede8df; display: flex; align-items: center; justify-content: center; align-self: center; }
+  .ch-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .ch-arrow { color: var(--rule); font-size: 1.2em; align-self: center; flex-shrink: 0; transition: color 0.2s, transform 0.2s; }
+
+  /* OVERLAY */
+  .overlay { display: none; position: fixed; inset: 0; z-index: 200; }
+  .overlay.open { display: flex; flex-direction: column; }
+  .overlay-bg { position: absolute; inset: 0; background: rgba(10,8,5,0.85); backdrop-filter: blur(8px); }
+  .overlay-panel { position: absolute; bottom: 0; left: 0; right: 0; background: var(--cream); border-radius: 20px 20px 0 0; max-height: 92vh; display: flex; flex-direction: column; animation: panelUp 0.4s cubic-bezier(0.16,1,0.3,1); overflow: hidden; }
+  @keyframes panelUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .overlay-handle { width: 36px; height: 3px; background: var(--rule); border-radius: 2px; margin: 14px auto 0; flex-shrink: 0; }
+  .overlay-header { padding: 20px 28px 18px; border-bottom: 1px solid var(--rule); flex-shrink: 0; position: relative; }
+  .overlay-close { position: absolute; top: 18px; right: 20px; background: none; border: 1px solid var(--rule); color: var(--muted); font-family: 'Cinzel', serif; font-size: 0.6em; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; cursor: pointer; transition: all 0.2s; }
+  .overlay-close:hover { border-color: var(--gold); color: var(--gold); }
+  .overlay-chapter-label { font-family: 'Cinzel', serif; font-size: 0.6em; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 6px; }
+  .overlay-chapter-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6em; font-weight: 400; color: var(--ink); }
+
+  .overlay-illustration { width: 100%; max-height: 250px; object-fit: cover; display: block; border-bottom: 1px solid var(--rule); }
+
+  .overlay-body { overflow-y: auto; padding: 32px 28px 20px; flex: 1; -webkit-overflow-scrolling: touch; }
+  .overlay-body p { font-family: 'EB Garamond', serif; font-size: 1.05em; line-height: 1.95; color: #2a2218; margin-bottom: 20px; }
+  .overlay-body p:first-child::first-letter { font-family: 'Cormorant Garamond', serif; font-size: 3.2em; font-weight: 600; float: left; line-height: 0.75; margin: 6px 10px 0 0; color: var(--gold); }
+
+  .overlay-footer { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-top: 1px solid var(--rule); flex-shrink: 0; background: var(--cream); }
+  .nav-btn { font-family: 'Cinzel', serif; font-size: 0.62em; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); background: none; border: 1px solid var(--rule); padding: 10px 18px; border-radius: 2px; cursor: pointer; transition: all 0.2s; }
+  .nav-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+  .nav-btn:disabled { opacity: 0.25; cursor: default; }
+  .nav-btn.next-btn { background: var(--ink); border-color: var(--ink); color: var(--parchment); }
+  .nav-btn.next-btn:hover:not(:disabled) { background: #2a2218; }
+  .nav-btn.end-btn { background: var(--gold); border-color: var(--gold); color: white; }
+  .overlay-progress { font-family: 'Cinzel', serif; font-size: 0.6em; letter-spacing: 2px; color: var(--muted); }
+
+  .page-footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--rule); }
+  .page-footer p { font-family: 'Cinzel', serif; font-size: 0.6em; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 480px) {
+    .hero { padding: 16px 20px 0; }
+    .chapters-section { padding: 48px 20px 60px; }
+    .overlay-body { padding: 24px 20px 16px; }
+    .overlay-header { padding: 16px 20px 14px; }
+    .ch-num-col { width: 56px; }
+    .ch-numeral { font-size: 2.2em; }
+    .ch-thumb { width: 64px; height: 64px; }
+  }
 </style>
 </head>
 <body>
@@ -74,25 +117,49 @@
   <h1 class="story-title">Shades of Resolve</h1>
   <p class="story-subtitle">A Novel in Seven Chapters</p>
   <div class="title-rule"><hr><span>✦</span><hr></div>
+  <div class="genre-tags">
+    <span class="genre-tag">Literary Fiction</span>
+    <span class="genre-tag">Principles</span>
+    <span class="genre-tag">Integrity</span>
+    <span class="genre-tag">Conflict</span>
+  </div>
 </div>
 
 <div class="hook-section">
-  <p class="hook-text">"A story about the quiet courage it takes to stop being nice, and start being good."</p>
+  <div class="hook-inner">
+    <span class="hook-ornament">❝</span>
+    <p class="hook-text">He was <strong>liked by everyone</strong> — and known by no one. For years, Daniel Sharma mistook keeping the peace for living with integrity. But there is a profound difference between the man who makes everyone comfortable and the man who does what is right — and that difference, when it finally surfaces, <strong>changes everything.</strong><br><br>A story about the quiet courage it takes to stop being nice, and start being good.</p>
+  </div>
 </div>
 
 <div class="chapters-section">
-  <span class="section-label">The Story</span>
-  <div id="chapterList"></div>
+  <div class="section-header">
+    <span class="section-label">The Story</span>
+    <h2 class="section-title-text">Seven Chapters</h2>
+  </div>
+  <div class="chapter-list" id="chapterList"></div>
+</div>
+
+<div class="page-footer">
+  <p>Private Collection &nbsp;·&nbsp; anirood2 &nbsp;·&nbsp; All Rights Reserved</p>
 </div>
 
 <div class="overlay" id="overlay">
-  <div class="overlay-content" id="overlayScroll">
+  <div class="overlay-bg" onclick="closeChapter()"></div>
+  <div class="overlay-panel">
+    <div class="overlay-handle"></div>
     <div class="overlay-header">
-      <span class="overlay-close" onclick="closeChapter()">CLOSE ✕</span>
-      <h2 id="overlayTitle" style="font-family: 'Cormorant Garamond'; font-size: 2.2em; font-weight: 300;"></h2>
+      <button class="overlay-close" onclick="closeChapter()">Close</button>
+      <span class="overlay-chapter-label" id="overlayLabel"></span>
+      <div class="overlay-chapter-title" id="overlayTitle"></div>
     </div>
-    <div id="overlayImageContainer"></div>
-    <div id="overlayBody" class="overlay-body"></div>
+    <div id="overlayIllustrationContainer"></div>
+    <div class="overlay-body" id="overlayBody"></div>
+    <div class="overlay-footer">
+      <button class="nav-btn" id="prevBtn" onclick="changeChapter(-1)">← Prev</button>
+      <span class="overlay-progress" id="overlayProgress"></span>
+      <button class="nav-btn next-btn" id="nextBtn" onclick="changeChapter(1)">Next →</button>
+    </div>
   </div>
 </div>
 
@@ -100,47 +167,47 @@
 const ROMAN = ['I','II','III','IV','V','VI','VII'];
 
 const chapters = [
-  { 
-    title: "The Mirror and the Mask", 
-    preview: "Daniel Sharma confronts the 'nice guy' facade he has built for years.", 
-    img: "images/shades_ch1.png", 
-    content: `<p>Daniel Sharma adjusted his tie in the mirrored elevator...</p> (Shortened for brevity)`
+  {
+    title: "The Mirror and the Mask",
+    preview: "A man admired by all confronts the uncomfortable question: does anyone truly know him?",
+    illustration: "data:image/jpeg;base64,...", // Replace with your actual image path or base64
+    content: `<p>Daniel Sharma adjusted his tie in the mirrored elevator wall of Stanmore Financial, the silver surface reflecting a man who seemed to have it all. At forty-two, his hair was only just beginning to salt at the temples, a change that lent him an air of seasoned wisdom rather than age. He was the Senior VP of Operations, a role that required him to be the bridge between the high-strung executives on the top floor and the thousands of employees below. He was, by all accounts, the most well-liked man in the building. He never missed a birthday, remembered the names of interns' spouses, and had a gift for delivering difficult news with a softness that left people feeling understood rather than defeated. </p><p>But as the elevator climbed silently toward the 44th floor, Daniel felt a familiar, hollow weight in his chest. It was the weight of a thousand small concessions. To his colleagues, he was the ultimate diplomat. To himself, he was increasingly becoming a ghost—a man constructed entirely of other people's expectations. He had spent twenty years perfecting the art of being "nice," a trait his father had always praised as the highest virtue. "A man who is liked," his father used to say, "is a man who is safe." </p><p>Safe, Daniel thought, but at what cost? </p><p>The elevator doors chimed open, and the morning bustle of Stanmore swallowed him. He was immediately greeted by Sarah, the head of HR, who looked frantic. "Daniel, thank God you're here. Mason is in a state. The compliance audit for the Southeast region came back, and there are... discrepancies. He wants to see you immediately." </p><p>Daniel offered a calm, practiced smile. "Deep breaths, Sarah. I’ll go see him now. I'm sure it’s nothing we can’t handle together." Sarah visibly relaxed, her shoulders dropping. "Thank you, Daniel. You always know what to say." </p><p>As he walked toward the corner office, the smile remained on his face, but his mind was racing. He knew about the discrepancies. In fact, he had been the one to flag them months ago, only to be told by Mason, the CEO and his long-time mentor, to "let the process work itself out." Now, the process had worked itself out in the form of a formal audit finding, and Mason would expect Daniel to be the one to fix it—to massage the numbers, to soothe the auditors, to keep the peace. </p><p>He reached the heavy mahogany doors and paused. This was the mask he wore: the fixer, the peacekeeper, the nice guy. But as he looked at his own reflection in the polished wood, he realized with a jolt of fear that he no longer recognized the man behind it.</p>`
   },
-  { 
-    title: "Lines in the Sand", 
-    preview: "Daniel and Priya navigate the difficulties of setting personal boundaries at home.", 
-    img: "images/shades_ch2.png", 
-    content: `<p>Daniel parked his sedan in the narrow driveway...</p>` 
+  {
+    title: "Lines in the Sand",
+    preview: "The discrepancies at Stanmore reveal a deeper rot, forcing a choice between loyalty and truth.",
+    illustration: "data:image/jpeg;base64,...",
+    content: `<p>The meeting with Mason had been exactly what Daniel feared. "It's a matter of framing, Daniel," Mason had said, pacing the length of his office. "We aren't hiding anything; we're just ensuring the data reflects the long-term health of the firm rather than short-term volatility. You’re the best at this. Talk to the compliance lead. Make him see the bigger picture." </p><p>Daniel had nodded. He had smiled. He had walked out of the room promising to look into it. And for the first time in his career, he felt physically ill from the lie. </p><p>That evening, the silence of his suburban home felt oppressive. His wife, Priya, was in the kitchen, the rhythmic chop of vegetables a constant in their quiet life together. She was a pediatrician, a woman whose moral compass was as fixed as the North Star. Daniel often wondered what she would think if she saw him in those meetings—saw the way he smoothed over the rough edges of corporate greed with a pleasant anecdote and a warm handshake. </p><p>"You're quiet tonight," Priya said, not looking up from her work. </p><p>"Just a long day at the office," Daniel replied, the standard script. </p><p>"Mason again?" </p><p>Daniel sighed and sat at the island. "He wants me to... adjust some things. Regarding the audit." </p><p>Priya stopped chopping. She looked at him, her dark eyes searching his. "Adjust, or fix?" </p><p>"In his mind, they're the same thing." </p><p>"And in yours?" </p><p>Daniel looked down at his hands. "I've spent my whole life being the person who makes things work, Priya. If I push back now, it's not just a disagreement. It’s a collapse. Mason has been my champion for fifteen years. The board trusts me because I don't make waves." </p><p>"There's a difference between making waves and standing on solid ground, Daniel," Priya said softly. She walked over and placed her hand on his. "You’ve always been the nice guy. Everyone loves you for it. But being nice isn't the same as being good. Being nice is about how you make other people feel. Being good is about who you are when no one is looking." </p><p>The words hit him with the force of a physical blow. He realized then that he hadn't been keeping the peace for the company's sake, or even for Mason's. He had been doing it to protect his own image—to maintain the comfort of being the man everyone liked. He was terrified of the conflict that would come if he finally said 'no.' </p><p>That night, Daniel didn't sleep. He went to his home office and pulled up the encrypted files he had saved months ago—the true records of the Southeast region. He looked at the numbers, stark and uncompromising. They told a story of systematic risk and hidden losses. To 'adjust' them would be more than just a diplomatic favor; it would be a betrayal of every person who had invested their savings with Stanmore. </p><p>The line in the sand wasn't just about the company. It was about his soul.</p>`
   },
-  { 
-    title: "The Tipping Point", 
-    preview: "Daniel provides his official testimony to Compliance, sparking open warfare with Mason.", 
-    img: "images/shades_ch3.png", 
-    content: `<p>Monday morning sunlight filtered through the skyscraper’s long glass facade...</p>` 
+  {
+    title: "The Tipping Point",
+    preview: "A quiet rebellion begins as Daniel prepares to face the consequences of his integrity.",
+    illustration: "data:image/jpeg;base64,...",
+    content: `<p>The following week was a blur of calculated silence. Daniel continued his duties, attending meetings and greeting staff with his usual warmth, but internally, a transformation was taking place. He was no longer the bridge; he was becoming the barrier. </p><p>He met with Marcus, the head of the compliance audit, in a small, windowless conference room. Marcus was a young man, sharp-eyed and weary, clearly expecting another round of corporate obfuscation from the "Nice Guy of Stanmore." </p><p>"Daniel," Marcus began, opening his laptop. "I assume you're here to explain why the Southeast numbers look so different from the projections we were given." </p><p>Daniel didn't smile. He didn't offer a preamble. He simply slid a flash drive across the table. "I'm here to give you the rest of the story, Marcus. These are the internal audit logs from my department. They haven't been 'adjusted' for the board." </p><p>Marcus stared at the drive, then at Daniel. "Do you know what this means? If Mason finds out you gave me this—" </p><p>"I know exactly what it means," Daniel interrupted, his voice steady. "It means the audit will be accurate. It means the truth will be on the record." </p><p>"Why now?" Marcus asked, genuinely curious. "You've been Mason's right hand for years. You could have just ridden this out and been the next CEO." </p><p>"Because I realized that being the next CEO wasn't worth the man I'd have to become to get there," Daniel said. </p><p>The news of the leak didn't take long to reach the top floor. By Friday afternoon, the atmosphere in the building had shifted from professional to predatory. The whispers that usually stopped when Daniel entered a room now intensified. Mason didn't call him to his office. Instead, Daniel received a formal notice that he was being placed on administrative leave pending an investigation into "unauthorized handling of sensitive data." </p><p>As he packed his few personal belongings into a cardboard box, Sarah from HR stood at his door. She didn't look relieved this time. She looked terrified. "Daniel, what did you do? Mason is... he’s destroyed. He said you betrayed him." </p><p>"I didn't betray him, Sarah," Daniel said, taping the box shut. "I stopped enabling him. There's a difference." </p><p>He walked out of the building with his box under his arm. For the first time in twenty years, no one stopped him to say goodbye. No one asked about his weekend. He was no longer the man everyone liked. He was a threat. And yet, as he stepped into the bright afternoon sun, the hollow weight in his chest was gone. He felt light. He felt, for the first time in a very long time, entirely real.</p>`
   },
-  { 
-    title: "Standing Firm", 
-    preview: "Mason is suspended as Daniel leads a new task force to rebuild trust at Stanmore.", 
-    img: "images/shades_ch4.png", 
-    content: `<p>The office air was electric—quiet but impossibly charged...</p>` 
+  {
+    title: "Standing Firm",
+    preview: "The fallout of truth ripple through the corporate halls, testing Daniel’s resolve.",
+    illustration: "data:image/jpeg;base64,...",
+    content: `<p>Administrative leave was a strange, quiet purgatory. Daniel spent his days at home, tending to the garden and rediscovering the simple rhythms of a life not dictated by a corporate calendar. The industry news was full of the "Stanmore Scandal," though his name was rarely mentioned—Mason was working hard to keep the internal rebellion quiet while he scrambled to find a scapegoat. </p><p>The pressure, however, began to mount in other ways. Old colleagues reached out—not to support him, but to urge him to "be reasonable." </p><p>"Daniel, think about your career," one former mentor told him over the phone. "If you just retract the statement about the logs, we can frame it as a technical misunderstanding. You’ll be back in your office by Monday, and we can put this behind us. Don't throw away twenty years of goodwill over a 'discrepancy'." </p><p>"It's not a discrepancy, Bill. It's a lie," Daniel replied. "And I'm done living them." </p><p>The "goodwill" he had spent decades building turned out to be incredibly fragile. People who had once sought his advice now avoided his calls. The social circles he and Priya moved in began to feel colder. At a neighborhood dinner party, he overheard a neighbor remarking how "unfortunate" it was that Daniel had become so "difficult" in his later career. </p><p>Priya, however, was his rock. "Let them talk," she said as they sat on their porch one evening. "They’re mourning the 'nice guy' because he was convenient for them. He never asked them to check their own consciences. This new version of you... he’s much more inconvenient. But he’s the one I want to grow old with." </p><p>Daniel realized that his previous "niceness" had been a form of cowardice—a way to avoid the discomfort of other people's disapproval. Now that he was facing that disapproval head-on, he found a strength he hadn't known he possessed. He wasn't being mean; he was being clear. He wasn't being aggressive; he was being firm. </p><p>The investigation reached its climax when the regulatory bodies, prompted by Marcus’s audit findings, launched a formal inquiry. Daniel was called to testify. Mason’s lawyers were prepared to paint him as a disgruntled employee with a personal vendetta. They expected him to crack under the pressure, to revert to his old self—the man who would rather apologize than argue. </p><p>They were wrong.</p>`
   },
-  { 
-    title: "Fires of Conflict", 
-    preview: "Daniel faces a smear campaign and a war of credibility as Mason fights back.", 
-    img: "images/shades_ch5.png", 
-    content: `<p>Daniel felt the chill even before he entered the building...</p>` 
+  {
+    title: "Fires of Conflict",
+    preview: "The final confrontation with Mason reveals the true price of power and the value of a clear conscience.",
+    illustration: "data:image/jpeg;base64,...",
+    content: `<p>The hearing room was cold and smelled of floor wax and old paper. Mason sat across from Daniel, his face a mask of controlled fury. He looked older than Daniel remembered, the stress of the scandal finally showing through his carefully curated exterior. </p><p>The questioning was brutal. Mason’s lead attorney, a man known for his ability to dismantle witnesses, focused on Daniel’s history of "diplomacy." </p><p>"Mr. Sharma, for twenty years, you were the primary architect of Stanmore’s internal culture. You signed off on every major report. You praised the very systems you are now criticizing. Why should we believe this sudden 'moral awakening' isn't just a move to save your own skin now that the auditors have arrived?" </p><p>Daniel looked at the attorney, then at Mason. He didn't feel the need to be liked by this man. He didn't feel the need to soften his words. </p><p>"For twenty years," Daniel said, his voice carrying through the room with a new, resonant clarity, "I chose peace over truth. I thought that being kind to my colleagues meant protecting them from the consequences of their actions. I was wrong. I wasn't being kind; I was being complicit. I am not here to save my skin. My career at Stanmore is over, and I accept that. I am here because I can no longer live with the silence. The records I provided are not a 'vendetta.' They are the truth that I should have spoken years ago." </p><p>The room went quiet. Mason leaned forward, his voice a low hiss. "You’re a traitor, Daniel. You were family. I built you." </p><p>"You built a mask, Mason," Daniel replied, looking him directly in the eye. "And I wore it willingly. But I’m finished with it now. You didn't lose a friend today; you lost an accomplice. And if that feels like a betrayal, it's only because you’ve forgotten what loyalty to the truth looks like." </p><p>The hearing ended with a recommendation for a full forensic audit and the immediate suspension of Mason and several board members. As the room cleared, Mason was surrounded by his lawyers, a man trapped in the fortress he had built of lies. </p><p>Daniel walked out alone. He felt a strange sense of grief for the relationship he had lost, but it was outweighed by a profound sense of peace. He had entered the fire of conflict and come out on the other side, not burned, but tempered.</p>`
   },
-  { 
-    title: "Road to Resolution", 
-    preview: "Daniel is promoted to CCO and begins the hard work of healing the company culture.", 
-    img: "images/shades_ch6.png", 
-    content: `<p>Auditors departed, and the war room returned to its regular hum...</p>` 
+  {
+    title: "Road to Resolution",
+    preview: "Life after Stanmore brings a new purpose as Daniel rebuilds his identity on a foundation of integrity.",
+    illustration: "data:image/jpeg;base64,...",
+    content: `<p>The aftermath of the Stanmore scandal was long and messy. Mason eventually stepped down, and the company underwent a massive restructuring. Daniel was offered his job back by the new leadership, but he declined. He knew he couldn't go back to the halls where he had spent so long being someone else. </p><p>Instead, he started a small consultancy firm focused on corporate ethics and transparency. It wasn't nearly as lucrative as his VP role, and his client list was small at first. Many companies were still wary of a "whistleblower." But the clients he did have were people who truly wanted to build something lasting and honest. </p><p>His personal life also changed. His "circle" had shrunk significantly, but the friendships that remained were deeper, built on shared values rather than social convenience. He found he had more time for Priya, more time for his own thoughts, and a newfound passion for mentoring young professionals who were struggling with the same pressures he had faced. </p><p>One afternoon, he was at a local coffee shop, preparing for a workshop, when he saw Sarah, his former HR head. She looked different—less frantic, more grounded. She approached his table hesitantly. </p><p>"Daniel? I wanted to say... I'm sorry. For how I acted when you left. I was scared for my own job, and I didn't see what you were actually doing." </p><p>Daniel smiled, and this time, it was a real smile. "It's okay, Sarah. I was scared for twenty years. I understand." </p><p>"I quit Stanmore a month after you did," she said, sitting down. "I realized I was just 'fixing' things too. Now I'm working for a non-profit. It pays half as much, but I sleep through the night." </p><p>They talked for an hour—not about corporate politics, but about the difficulty and the necessity of being "good." As she left, Daniel felt a quiet sense of satisfaction. His actions had ripples he hadn't even considered. By choosing to be true to himself, he had given others the permission to do the same.</p>`
   },
-  { 
-    title: "The Unmasked Soul", 
-    preview: "In the golden hush of autumn, Daniel finds peace in his new legacy of integrity.", 
-    img: "images/shades_ch7.png", 
-    content: `<p>Autumn arrived in a golden hush. Inside their home...</p>` 
+  {
+    title: "The Unmasked Soul",
+    preview: "In the quiet of a life well-lived, Daniel finds the ultimate reward of a life without masks.",
+    illustration: "data:image/jpeg;base64,...",
+    content: `<p>Five years later, Daniel Sharma sat in the front row of a university auditorium. Priya was beside him, her hand in his. Their daughter was about to cross the stage to receive her medical degree. </p><p>As he watched her, he thought about the legacy he was leaving. For a long time, he thought his legacy would be a high-ranking title and a reputation for being the most liked man in the room. Now, he knew better. </p><p>His legacy was the fact that his daughter had never seen him lie to keep the peace. She had seen him face conflict with grace, stand his ground with conviction, and prioritize integrity over comfort. She hadn't learned to be "nice"—she had learned to be good. </p><p>After the ceremony, they walked through the campus, the autumn leaves crunching underfoot. The sun was low in the sky, casting long, golden shadows across the grass. Daniel felt a deep, resonant sense of belonging—not to a company or a social class, but to himself. </p><p>He was no longer a man known by no one. He was known by his wife, his children, his friends, and most importantly, he was known by himself. The mask was long gone, and the man beneath it was more resilient, more compassionate, and more alive than the ghost he had once been. </p><p>As they reached the car, Priya looked at him, the golden light catching the silver in his hair. "You look happy, Daniel." </p><p>"I am," he said, and he meant it. "I finally stopped trying to be the man everyone wanted, and just became the man I was supposed to be." </p><p>He took one last look at the sprawling campus, at the hundreds of young people beginning their own journeys. He knew they would face their own masks, their own Mason's, their own fires of conflict. But he also knew that on the other side of that struggle lay the only thing truly worth having: a soul, unmasked and resolve, unshaken. </p><p>The "Nice Guy" was dead. And Daniel Sharma had never felt more alive.</p>`
   }
 ];
 
@@ -149,38 +216,76 @@ function init() {
   let html = "";
   for(let i=0; i<chapters.length; i++) {
     html += '<div class="chapter-card" onclick="openChapter('+i+')">' +
-            '<div class="ch-numeral">' + ROMAN[i] + '</div>' +
+            '<div class="ch-num-col">' +
+              '<span class="ch-num">Chapter</span>' +
+              '<div class="ch-numeral">' + ROMAN[i] + '</div>' +
+            '</div>' +
             '<div class="ch-content">' +
               '<div class="ch-title">' + chapters[i].title + '</div>' +
               '<div class="ch-preview">' + chapters[i].preview + '</div>' +
             '</div>' +
-            '<div class="ch-thumb"><img src="' + chapters[i].img + '" alt="' + chapters[i].title + '"></div>' +
+            '<div class="ch-thumb">' + 
+              (chapters[i].illustration.startsWith('data:') ? 
+              '<img src="' + chapters[i].illustration + '" alt="' + chapters[i].title + '">' : 
+              '<div class="ch-thumb-placeholder"><span>🎴</span><span>Image</span></div>') +
+            '</div>' +
+            '<div class="ch-arrow">→</div>' +
             '</div>';
   }
   list.innerHTML = html;
 }
 
+let currentChapter = 0;
+
 function openChapter(idx) {
-  // Set Title
-  document.getElementById('overlayTitle').innerText = chapters[idx].title;
-  
-  // Inject Large Image at top
-  document.getElementById('overlayImageContainer').innerHTML = `<img src="${chapters[idx].img}" class="chapter-full-img" alt="${chapters[idx].title}">`;
-  
-  // Set Body Text
-  document.getElementById('overlayBody').innerHTML = chapters[idx].content;
-  
-  // Open Overlay
-  document.getElementById('overlay').style.display = 'block';
+  currentChapter = idx;
+  renderChapter();
+  document.getElementById('overlay').style.display = 'flex';
+  document.getElementById('overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+  document.getElementById('overlayBody').scrollTop = 0;
+}
+
+function renderChapter() {
+  const ch = chapters[currentChapter];
+  document.getElementById('overlayLabel').textContent = `Chapter ${ROMAN[currentChapter]}`;
+  document.getElementById('overlayTitle').textContent = ch.title;
+  document.getElementById('overlayBody').innerHTML = ch.content;
   
-  // Reset scroll to top of content
-  document.getElementById('overlayScroll').scrollTop = 0;
+  // Update the illustration at the top of the reader
+  const illContainer = document.getElementById('overlayIllustrationContainer');
+  if (ch.illustration && ch.illustration.startsWith('data:')) {
+    illContainer.innerHTML = `<img class="overlay-illustration" src="${ch.illustration}" alt="${ch.title}">`;
+  } else {
+    illContainer.innerHTML = `<div class="overlay-illustration-placeholder"><span>🎴</span><span>Illustration coming soon</span></div>`;
+  }
+  
+  const isLast = currentChapter === chapters.length - 1;
+  document.getElementById('prevBtn').disabled = currentChapter === 0;
+  
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.className = `nav-btn ${isLast ? 'end-btn' : 'next-btn'}`;
+  nextBtn.textContent = isLast ? '✦ The End' : 'Next →';
+  nextBtn.onclick = isLast ? closeChapter : () => changeChapter(1);
+  
+  document.getElementById('overlayProgress').textContent = `${currentChapter + 1} of ${chapters.length}`;
+}
+
+function changeChapter(dir) {
+  const next = currentChapter + dir;
+  if (next >= 0 && next < chapters.length) {
+    currentChapter = next;
+    renderChapter();
+    document.getElementById('overlayBody').scrollTop = 0;
+  }
 }
 
 function closeChapter() {
-  document.getElementById('overlay').style.display = 'none';
-  document.body.style.overflow = 'auto';
+  document.getElementById('overlay').classList.remove('open');
+  setTimeout(() => {
+    document.getElementById('overlay').style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }, 300);
 }
 
 window.onload = init;
