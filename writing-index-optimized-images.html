@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Writing — anirood2</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=Cinzel:wght@400;600&amp;family=EB+Garamond:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root { --ink: #0d0d14; --gold: #b8860b; --gold-light: #d4a843; --muted: #8a7f6e; --purple: #8b5cf6; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'EB Garamond', Georgia, serif; background: var(--ink); color: #e6edf3; min-height: 100vh; overflow-x: hidden; }
+  header { position: relative; padding: 70px 24px 50px; text-align: center; overflow: hidden; border-bottom: 1px solid #1f1535; }
+  header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, #1a1025 0%, var(--ink) 70%); }
+  .header-inner { position: relative; z-index: 1; }
+  .avatar { width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, #8b5cf6, #4c1d95); display: flex; align-items: center; justify-content: center; font-size: 2.4em; margin: 0 auto 20px; border: 3px solid #2d1f3d; box-shadow: 0 0 40px rgba(139,92,246,0.3); }
+  header h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.2em; font-weight: 300; color: #f0f6fc; margin-bottom: 8px; }
+  header p { font-family: 'EB Garamond', serif; font-style: italic; color: #8b949e; font-size: 1em; max-width: 380px; margin: 0 auto; line-height: 1.7; }
+  .count { display: inline-block; background: rgba(139,92,246,0.15); border: 1px solid #4c1d95; color: #a78bfa; padding: 4px 14px; border-radius: 20px; font-size: 0.75em; margin-top: 12px; font-family: 'Cinzel', serif; letter-spacing: 1px; }
+  .container { max-width: 760px; margin: 0 auto; padding: 50px 20px 80px; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--purple); text-decoration: none; font-size: 0.82em; margin-bottom: 36px; font-family: 'Cinzel', serif; letter-spacing: 1px; text-transform: uppercase; }
+  .section-label { font-family: 'Cinzel', serif; font-size: 0.65em; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 24px; padding-bottom: 10px; border-bottom: 1px solid #1f1535; }
+  .story-card { display: block; text-decoration: none; color: inherit; border-radius: 20px; margin-bottom: 24px; overflow: hidden; position: relative; border: 1px solid #2d1f3d; transition: transform 0.2s, border-color 0.2s; -webkit-tap-highlight-color: transparent; min-height: 300px; }
+  .story-card:active { transform: scale(0.98); }
+  .story-card.sor:hover { border-color: var(--gold); }
+  .story-card.qh:hover { border-color: #7c5cbf; }
+  .mosaic-bg { position: absolute; inset: 0; overflow: hidden; border-radius: 20px; }
+  .mosaic-img { position: absolute; background-size: cover; background-position: center; opacity: 0.18; transition: opacity 0.3s; }
+  .story-card:hover .mosaic-img { opacity: 0.26; }
+  .mosaic-overlay-sor { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(13,13,20,0.82) 0%, rgba(26,18,10,0.75) 50%, rgba(13,13,20,0.88) 100%); border-radius: 20px; }
+  .mosaic-overlay-qh { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(13,13,20,0.82) 0%, rgba(18,14,26,0.75) 50%, rgba(13,13,20,0.88) 100%); border-radius: 20px; }
+  .card-content { position: relative; z-index: 2; padding: 36px 32px 28px; display: flex; flex-direction: column; min-height: 300px; }
+  .card-ornament { font-family: 'Cinzel', serif; font-size: 0.6em; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .card-ornament.gold { color: var(--gold); } .card-ornament.purple { color: #a78bfa; }
+  .card-ornament::after { content: ''; flex: 1; height: 1px; }
+  .card-ornament.gold::after { background: linear-gradient(to right, rgba(184,134,11,0.4), transparent); }
+  .card-ornament.purple::after { background: linear-gradient(to right, rgba(167,139,250,0.4), transparent); }
+  .card-title { font-family: 'Cormorant Garamond', serif; font-size: 2.4em; font-weight: 300; color: #f0f6fc; line-height: 1.1; margin-bottom: 16px; }
+  .card-hook { font-family: 'EB Garamond', serif; font-style: italic; font-size: 1em; color: #c4b5fd; line-height: 1.8; margin-bottom: 24px; flex: 1; max-width: 520px; }
+  .card-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+  .card-tag { font-family: 'Cinzel', serif; font-size: 0.58em; letter-spacing: 1.5px; text-transform: uppercase; color: #8b949e; border: 1px solid #2d1f3d; padding: 4px 12px; border-radius: 2px; }
+  .card-cta { display: inline-flex; align-items: center; gap: 10px; font-family: 'Cinzel', serif; font-size: 0.65em; letter-spacing: 2px; text-transform: uppercase; padding-bottom: 2px; transition: gap 0.2s; }
+  .card-cta.gold { color: var(--gold-light); border-bottom: 1px solid rgba(212,168,67,0.3); }
+  .card-cta.purple { color: #a78bfa; border-bottom: 1px solid rgba(167,139,250,0.3); }
+  .story-card:hover .card-cta { gap: 14px; }
+  .chapter-strip { position: relative; z-index: 2; display: flex; border-top: 1px solid rgba(45,31,61,0.8); }
+  .strip-thumb { flex: 1; height: 60px; background-size: cover; background-position: center; opacity: 0.5; transition: opacity 0.2s; position: relative; }
+  .strip-thumb:not(:last-child) { border-right: 1px solid rgba(13,13,20,0.5); }
+  .story-card:hover .strip-thumb { opacity: 0.65; }
+  .strip-thumb-num { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); font-family: 'Cinzel', serif; font-size: 0.45em; letter-spacing: 1px; color: rgba(255,255,255,0.5); }
+  .coming-soon-card { border: 1px dashed #1f1535; border-radius: 20px; padding: 36px 32px; text-align: center; opacity: 0.4; }
+  .coming-soon-card p { font-family: 'EB Garamond', serif; font-style: italic; color: #8b949e; font-size: 1em; }
+  footer { text-align: center; padding: 40px 20px; border-top: 1px solid #1f1535; }
+  footer p { font-family: 'Cinzel', serif; font-size: 0.6em; letter-spacing: 2px; text-transform: uppercase; color: #2d1f3d; }
+  @media (max-width: 480px) { .card-title { font-size: 1.8em; } .card-content { padding: 24px 20px 20px; } .strip-thumb { height: 48px; } }
+</style>
+</head>
+<body>
+<header>
+<div class="header-inner">
+<div class="avatar">🖊️</div>
+<h1>My Writing</h1>
+<p>Original stories, novels and creative writing — private collection.</p>
+<span class="count">2 Stories</span>
+</div>
+</header>
+<div class="container">
+<a class="back-link" href="https://anirood2.github.io">← Main</a>
+<span class="section-label">Stories &amp; Novels</span>
+<a class="story-card sor" href="shades-of-resolve.html">
+<div class="mosaic-bg"><div class="mosaic-img" style="left:0%;top:0%;width:34%;height:50%;background-image:url('images/img_0001.jpg');"></div><div class="mosaic-img" style="left:33%;top:0%;width:34%;height:50%;background-image:url('images/img_0002.jpg');"></div><div class="mosaic-img" style="left:66%;top:0%;width:34%;height:50%;background-image:url('images/img_0003.jpg');"></div><div class="mosaic-img" style="left:0%;top:50%;width:26%;height:50%;background-image:url('images/img_0004.jpg');"></div><div class="mosaic-img" style="left:25%;top:50%;width:26%;height:50%;background-image:url('images/img_0005.jpg');"></div><div class="mosaic-img" style="left:50%;top:50%;width:26%;height:50%;background-image:url('images/img_0006.jpg');"></div><div class="mosaic-img" style="left:75%;top:50%;width:25%;height:50%;background-image:url('images/img_0007.jpg');"></div><div class="mosaic-overlay-sor"></div></div>
+<div class="card-content">
+<div class="card-ornament gold">Literary Fiction</div>
+<h2 class="card-title">Shades of Resolve</h2>
+<p class="card-hook">He was liked by everyone — and known by no one. A story about the quiet courage it takes to stop being nice, and start being good.</p>
+<div class="card-meta"><span class="card-tag">7 Chapters</span><span class="card-tag">Complete</span><span class="card-tag">Principles</span><span class="card-tag">Integrity</span></div>
+<span class="card-cta gold">Read the Story →</span>
+</div>
+<div class="chapter-strip"><div class="strip-thumb" style="background-image:url('images/img_0008.jpg');"><span class="strip-thumb-num">Ch I</span></div><div class="strip-thumb" style="background-image:url('images/img_0009.jpg');"><span class="strip-thumb-num">Ch II</span></div><div class="strip-thumb" style="background-image:url('images/img_0010.jpg');"><span class="strip-thumb-num">Ch III</span></div><div class="strip-thumb" style="background-image:url('images/img_0011.jpg');"><span class="strip-thumb-num">Ch IV</span></div><div class="strip-thumb" style="background-image:url('images/img_0012.jpg');"><span class="strip-thumb-num">Ch V</span></div><div class="strip-thumb" style="background-image:url('images/img_0013.jpg');"><span class="strip-thumb-num">Ch VI</span></div><div class="strip-thumb" style="background-image:url('images/img_0014.jpg');"><span class="strip-thumb-num">Ch VII</span></div></div>
+</a>
+<a class="story-card qh" href="cage-of-comfort.html">
+<div class="mosaic-bg"><div class="mosaic-img" style="left:0%;top:0%;width:34%;height:50%;background-image:url('images/img_0015.jpg');"></div><div class="mosaic-img" style="left:33%;top:0%;width:34%;height:50%;background-image:url('images/img_0016.jpg');"></div><div class="mosaic-img" style="left:66%;top:0%;width:34%;height:50%;background-image:url('images/img_0017.jpg');"></div><div class="mosaic-img" style="left:0%;top:50%;width:26%;height:50%;background-image:url('images/img_0018.jpg');"></div><div class="mosaic-img" style="left:25%;top:50%;width:26%;height:50%;background-image:url('images/img_0019.jpg');"></div><div class="mosaic-img" style="left:50%;top:50%;width:26%;height:50%;background-image:url('images/img_0020.jpg');"></div><div class="mosaic-img" style="left:75%;top:50%;width:25%;height:50%;background-image:url('images/img_0021.jpg');"></div><div class="mosaic-overlay-qh"></div></div>
+<div class="card-content">
+<div class="card-ornament purple">Literary Fiction</div>
+<h2 class="card-title">Cage of Comfort</h2>
+<p class="card-hook">Every cage is built from something that once felt like comfort. An unflinching, deeply human story of Maya's journey from craving to meaning — and the radical power of choosing response over reaction.</p>
+<div class="card-meta"><span class="card-tag">7 Chapters</span><span class="card-tag">Complete</span><span class="card-tag">Addiction &amp; Hope</span><span class="card-tag">Belonging</span></div>
+<span class="card-cta purple">Read the Story →</span>
+</div>
+<div class="chapter-strip"><div class="strip-thumb" style="background-image:url('images/img_0022.jpg');"><span class="strip-thumb-num">Ch I</span></div><div class="strip-thumb" style="background-image:url('images/img_0023.jpg');"><span class="strip-thumb-num">Ch II</span></div><div class="strip-thumb" style="background-image:url('images/img_0024.jpg');"><span class="strip-thumb-num">Ch III</span></div><div class="strip-thumb" style="background-image:url('images/img_0025.jpg');"><span class="strip-thumb-num">Ch IV</span></div><div class="strip-thumb" style="background-image:url('images/img_0026.jpg');"><span class="strip-thumb-num">Ch V</span></div><div class="strip-thumb" style="background-image:url('images/img_0027.jpg');"><span class="strip-thumb-num">Ch VI</span></div><div class="strip-thumb" style="background-image:url('images/img_0028.jpg');"><span class="strip-thumb-num">Ch VII</span></div></div>
+</a>
+<div class="coming-soon-card"><p>Your next story will appear here — paste title &amp; chapters to Claude to add it.</p></div>
+</div>
+<footer><p>Private Collection  ·  anirood2  ·  All Rights Reserved</p></footer>
+</body>
+</html>
